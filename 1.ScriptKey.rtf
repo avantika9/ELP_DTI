@@ -1,0 +1,89 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fswiss\fcharset0 Helvetica-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red93\green108\blue121;\red255\green255\blue255;\red0\green0\blue0;
+\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgenericrgb\c36526\c42188\c47515;\csgenericrgb\c100000\c100000\c100000;\csgenericrgb\c0\c0\c0\c85000;
+\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww22720\viewh19260\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Key to scripts\
+\
+1. Copy_files.sh\
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f1 \cf2 \cb3  This script creates a copy of anatomical and DTI dicom data from ELP to AM/ELP_DTI folder\
+
+\f0 \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 2.qc_script \
+Performs quality control and creates gr_commands_ses.txt file listing subject wise bad gradients [any gradient with >=3 bad slices is considered a bad gradient ]\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b \cf0 Ses-5 
+\f0\b0 \
+dicom2nii_ses5.sh\
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f1 \cf2 \cb3 Creates separate temp folders for multiple DICOMS and CONVERTS dicom to nii. Note. load collection module before running on Accre\
+
+\f0 \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 qc_dsi_studio_ses5.sh\
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f1 \cf2 \cb3 The  script uses dsi studio to convert the dwi.nii.gz files to src and saves it as 4D.nii.gz files. (This step does not need to be done for ses-7 files)\
+
+\f0 \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 qc_script_ses5.py\
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f1 \cf2 \cb3 Python script to read _4D.nii.gz file (ses-5) and convert to nhdr (Slicer) and then generate the QC report.Note to run \
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f2\b \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 gr script
+\f0\b0 \
+Gives a txt file with list of files with bad volumes >= 3 bad slices - subject ids\
+\
+gr_dcm_bash_ses5.sh\
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f1 \cf2 \cb3 ## This script makes a copy of dicom folder, delete the bad .dcm files according to QC report (gr_commands_ses7.txt) and then runs the dcm2nii conversion to give three files - DTI file, bval and bvec for each subject - and makes a copy of the new nii/bval/bvec/json files to subject specific dwi folder.\cf4 \
+\cf2 ## The script uses idfile specified  at the end of this code with subject numbers to loop across subjects\cf4 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0 \cf0 \cb1 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b \cf0 Ses-7
+\f0\b0 \
+dicom2nii_ses7.sh\
+qc_dsi_studio_ses7.sh\
+qc_script_ses7.py\
+gr script\
+gr_dcm_bash_ses7.sh\
+\
+3.anat - HZ\
+Keep better T1\
+\
+\
+4.\
+bval_0.sh
+\f1 \cf4 \cb3 \
+\pard\tx593\pardeftab593\partightenfactor0
+\cf2 ## This script converts "5" to "0" of bval files in dwi folder\cf4 \
+\cf2 ## The script uses idfile specified  at the end of this code with subject numbers to loop across subjects\
+\
+\pard\tx593\pardeftab593\partightenfactor0
+\cf5 5. dt6.m,dt6.submit,dt6submit.sh\
+## dt6.m is a Matlab script to run dtiInit on one subject. dt6.submit and dt6sumit.sh loops across multiple subjects. To run use terminal [./dt6submit.sh]. Output saved to dwi_analysis folder within each subject folder. Requisite idfile.txt contains ids of subjects to run the dwi analysis. \
+\
+6. afq.m, afq.sumit, afqsubmit.sh\
+afq.m is a Matlab script to run afq one subject, afq.submit and afqsubmit.sh loops across multiple subjects. \
+To tun use terminal ./afqsubmit.sh. Output saved to afq_ses5 or afq_ses7 folders as specified.}
