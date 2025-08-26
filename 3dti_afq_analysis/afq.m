@@ -1,6 +1,6 @@
 function afq(SubId)
 % This matlab script takes the dt6.mat data to generate whole brain tractography
-% to compute FA, probablistic tractography
+% to compute FA, deterministic tractography
 % Creators: Avantika Mathur (Ph.D., Post-doc)
 % Bugs or comments:  avantika9mathur@gmail.com
 % Authorship to be given to  Avantika Mathur for using this script

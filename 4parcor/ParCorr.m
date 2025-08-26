@@ -5,7 +5,7 @@
 addpath(genpath('/panfs/accrepfs.vampire/data/booth_lab/DTI_Tools/AFQ-1.2'));
 addpath(genpath('/panfs/accrepfs.vampire/data/booth_lab/DTI_Tools/vistasoft-master'));
 addpath('/panfs/accrepfs.vampire/data/booth_lab/LabCode/typical_data_analysis/spm12');   
-addpath '/panfs/accrepfs.vampire/data/booth_lab/AM/ELP_DTI/afq_ses5' % add AFQ path select ses-5/ses-7
+addpath '/panfs/accrepfs.vampire/data/booth_lab/AM/ELP_DTI/afq_ses7' % add AFQ path select ses-5/ses-7
 %addpath '/gpfs51/dors2/gpc/JamesBooth/JBooth-Lab/BDL/AM/ELP_DTI/afq_ses5' % add AFQ path select ses-5/ses-7
 addpath '/panfs/accrepfs.vampire/data/booth_lab/AM/ELP_DTI/Scripts' %add Scripts
 
@@ -29,11 +29,11 @@ data_ILF_30 = AFQ_get(afq,'left ILF', 'fa');
 data_SLF_30 = AFQ_get(afq,'left SLF', 'fa');
 
 %Read Behavioral Data
-  data_info=['/panfs/accrepfs.vampire/data/booth_lab/AM/ELP_DTI/Scripts/idfile_afq_ses7_corrected.xlsx']; %final_sample sheet, the subject column should have sub plus subject number.(e.g. sub-5003)
+  data_info=['/panfs/accrepfs.vampire/data/booth_lab/AM/ELP_DTI/Scripts/4parcor/idfile_afq_ses7_corrected.xlsx']; %final_sample sheet, the subject column should have sub plus subject number.(e.g. sub-5003)
   M = readtable(data_info, 'Sheet','SIDS_ses7_Parcorr');
 
 % % Read Behavioral Data
-data_info=['/panfs/accrepfs.vampire/data/booth_lab/AM/ELP_DTI/Scripts/idfile_afq_ses5.xlsx']; %final_sample sheet, the subject column should have sub plus subject number.(e.g. sub-5003)
+data_info=['/panfs/accrepfs.vampire/data/booth_lab/AM/ELP_DTI/Scripts/4parcor/idfile_afq_ses5.xlsx']; %final_sample sheet, the subject column should have sub plus subject number.(e.g. sub-5003)
 M = readtable(data_info, 'Sheet','SIDS_ses5_Parcorr');
 
 
@@ -75,7 +75,7 @@ b = [M.KBIT_Nonverbal_StS];% Control
 c = [M.CELF_WC_Raw]; % Control
 covariates = [a,b,c]; % Combine control covariates
 
-% Word Classes
+% 
 r = zeros(1,100);
 p = zeros(1,100);
 for i = 1:100
@@ -363,7 +363,7 @@ tract_names = {'SLF', 'AF', 'IFOF', 'ILF'};
 data_names_100 = {'data_SLF_100', 'data_AF_100', 'data_IFOF_100', 'data_ILF_100'};
 data_names_30 = {'data_SLF_30', 'data_AF_30', 'data_IFOF_30', 'data_ILF_30'};
 % Specify number of nodes here
-num_nodes = 30;% or 30
+num_nodes = 30;% or 30 or 100
 y = [M.WJ_III_WordID_Raw]; % Predictor vector
 a = [M.Age]; % Control
 b = [M.KBIT_Nonverbal_StS];% Control

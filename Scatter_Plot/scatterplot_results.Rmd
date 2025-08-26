@@ -1,0 +1,180 @@
+---
+title: "Scatter"
+output:
+  pdf_document: default
+  html_document: default
+date: "2025-03-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Install and load necessary packages
+library(ggplot2)
+library(broom)
+library(boot)
+library(ppcor)
+library(psych)
+```
+# Plot of IFOF with Word Classes
+```{r}
+# Load the CSV file
+data <- read.csv("/Volumes/jbooth-lab/BDL/AM/ELP_DTI/Results_ses7/Scatter_ses7_IFOF.csv")
+
+# Z - control, Y - mean FA of IFOF cluster, X - word classes raw score
+Z <- cbind(data$Age, data$KBIT_Nonverbal_StS, data$CTOPP.2_EL_Raw)
+Y <- data$Cluster.Mean_FA_IFOF
+X <- data$CELF_WC_Raw
+
+# Check normality
+shapiro.test(X) # X fails normality, so spearman correlation is chosen
+shapiro.test(Y)
+
+# Fit a linear model
+model <- lm(Y ~ X + Z)
+
+# Check linearity assumption
+plot(model, which = 1)  # Residuals vs Fitted plot 
+
+# Compute the partial correlation and get the confidence interval
+partial_cor <- pcor.test(Y, X, Z, method = c("spearman"))
+print(partial_cor)
+
+Y_resid <- residuals(lm(Y ~ Z))
+X_resid <- residuals(lm(X ~ Z))
+
+ci <- cor.test(X_resid, Y_resid)
+print(ci$conf.int)
+
+m<-ggplot(data, aes(x=X_resid, y=Y_resid)) +
+geom_point(shape = 21, size = 2, fill = "black") +
+labs(x="Word Classes Res", y = "Left IFOF Cluster Mean FA Res")+
+scale_size_manual(values=c(15))+
+theme_classic() +
+theme(axis.text = element_text(size = 14, face = "bold"),
+      axis.title = element_text(size = 14, face = "bold"))
+m +  geom_smooth(method=lm, color = "red")
+```
+# Plot of ILF with WID
+```{r}
+# Load the CSV file
+data <- read.csv("/Volumes/jbooth-lab/BDL/AM/ELP_DTI/Results_ses7/Scatter_ses7_ILF.csv") # 17 subjects had NaN in Left ILF FA - removed
+
+# Z - control, Y - mean FA of ILF cluster, X - word classes raw score
+Z1 <- cbind(data$Age, data$KBIT_Nonverbal_StS)
+Y1 <- data$Cluster.Mean_FA_ILF
+X1 <- data$WJ.III_WordID_Raw
+
+# Check normality
+shapiro.test(X1) # X fails normality, so spearman correlation is chosen
+shapiro.test(Y1) #Y fails normality, so spearman correlation is chosen
+
+# Fit a linear model
+model <- lm(Y1 ~ X1 + Z1)
+
+# Check linearity assumption
+plot(model, which = 1)  # Residuals vs Fitted plot 
+
+# Compute the partial correlation and get the confidence interval
+partial_cor <- pcor.test(Y1, X1, Z1, method = c("spearman"))
+print(partial_cor)
+
+Y_resid <- residuals(lm(Y1 ~ Z1))
+X_resid <- residuals(lm(X1 ~ Z1))
+
+ci <- cor.test(X_resid, Y_resid)
+print(ci$conf.int)
+
+m<-ggplot(data, aes(x=X_resid, y=Y_resid)) +
+geom_point(shape = 21, size = 2, fill = "black") +
+labs(x="WID Res", y = "Left ILF Cluster Mean FA Res")+
+scale_size_manual(values=c(15))+
+theme_classic() +
+theme(axis.text = element_text(size = 14, face = "bold"),
+      axis.title = element_text(size = 14, face = "bold"))+
+ylim(-0.10, 0.10)  
+
+m+geom_smooth(method=lm, color = "red")
+```
+
+# Plot of AF with Elision
+```{r}
+# Load the CSV file
+data <- read.csv("/Volumes/jbooth-lab/BDL/AM/ELP_DTI/Results_ses5/Scatter_ses5_AF_Elision_WID.csv") # 2 subjects had NaN in Left AF FA - removed
+
+# Z - control, Y - mean FA of ILF cluster, X - word classes raw score
+Z1 <- cbind(data$Age, data$KBIT_Nonverbal_StS)
+Y1 <- data$Cluster.Mean_FA_AF_Elision
+X1 <- data$CTOPP.2_EL_Raw
+
+# Check normality
+shapiro.test(X1) # 
+shapiro.test(Y1) #Y fails normality, so spearman correlation is chosen
+
+# Fit a linear model
+model <- lm(Y1 ~ X1 + Z1)
+
+# Check linearity assumption
+plot(model, which = 1)  # Residuals vs Fitted plot 
+
+# Compute the partial correlation and get the confidence interval
+partial_cor <- pcor.test(Y1, X1, Z1, method = c("spearman"))
+print(partial_cor)
+
+Y_resid <- residuals(lm(Y1 ~ Z1))
+X_resid <- residuals(lm(X1 ~ Z1))
+
+ci <- cor.test(X_resid, Y_resid)
+print(ci$conf.int)
+
+m<-ggplot(data, aes(x=X_resid, y=Y_resid)) +
+geom_point(shape = 21, size = 2, fill = "black") +
+labs(x="Elision Res", y = "Left AF Cluster Mean FA Res")+
+scale_size_manual(values=c(15))+
+theme_classic() +
+theme(axis.text = element_text(size = 14, face = "bold"),
+      axis.title = element_text(size = 14, face = "bold"))+
+ylim(-0.10, 0.10)  
+
+m+geom_smooth(method=lm, color = "red")
+```
+# Plot of AF with WID
+```{r}
+# Load the CSV file
+data <- read.csv("/Volumes/jbooth-lab/BDL/AM/ELP_DTI/Results_ses5/Scatter_ses5_AF_Elision_WID.csv") # 2 subjects had NaN in Left AF FA - removed
+
+# Z - control, Y - mean FA of ILF cluster, X - word classes raw score
+Z1 <- cbind(data$Age, data$KBIT_Nonverbal_StS)
+Y1 <- data$Cluster.Mean_FA_AF_WID
+X1 <- data$WJ.III_WordID_Raw
+
+# Check normality
+shapiro.test(X1) # 
+shapiro.test(Y1) #Y fails normality, so spearman correlation is chosen
+
+# Fit a linear model
+model <- lm(Y1 ~ X1 + Z1)
+
+# Check linearity assumption
+plot(model, which = 1)  # Residuals vs Fitted plot 
+
+# Compute the partial correlation and get the confidence interval
+partial_cor <- pcor.test(Y1, X1, Z1, method = c("spearman"))
+print(partial_cor)
+
+Y_resid <- residuals(lm(Y1 ~ Z1))
+X_resid <- residuals(lm(X1 ~ Z1))
+
+ci <- cor.test(X_resid, Y_resid)
+print(ci$conf.int)
+
+m<-ggplot(data, aes(x=X_resid, y=Y_resid)) +
+geom_point(shape = 21, size = 2, fill = "black") +
+labs(x="WID Res", y = "Left AF Cluster Mean FA Res")+
+scale_size_manual(values=c(15))+
+theme_classic() +
+theme(axis.text = element_text(size = 14, face = "bold"),
+      axis.title = element_text(size = 14, face = "bold"))+
+ylim(-0.10, 0.10)  
+
+m+geom_smooth(method=lm, color = "red")
+```

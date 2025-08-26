@@ -8,8 +8,8 @@ fg = dtiReadFibers(fullfile(sub_dirs,'fibers','MoriGroups_clean_D5_L4.mat'));
 % Load the subject's dt6 file
 dt = dtiLoadDt6(fullfile(sub_dirs,'dt6.mat'));
 % Compute Tract Profiles with 100 nodes
-%numNodes = 100;%
-numNodes = 30;
+numNodes = 100;%
+%numNodes = 30;
 [fa, md, rd, ad, cl, volume, TractProfile] = AFQ_ComputeTractProperties(fg,dt,numNodes);
 
 %% Load data to display for AF - r  is the correlation value and p in the significance of the partial
@@ -36,6 +36,7 @@ AFQ_RenderFibers(fg(19),'color',[.8 .8 1],'tractprofile',TractProfile(19),...
     'radius',[1 6]);
 % Remove grid lines globally
 grid off
+
 %% Diplay of partial correlation results AF/SLF/IFOF - WID [results obtained from line302-347 of ParCorr script)
 % 11 IFOF, 13 ILF, 15 SLF, 19 AF.
 

@@ -8,8 +8,8 @@ fg = dtiReadFibers(fullfile(sub_dirs,'fibers','MoriGroups_clean_D5_L4.mat'));
 % Load the subject's dt6 file
 dt = dtiLoadDt6(fullfile(sub_dirs,'dt6.mat'));
 % Compute Tract Profiles with 100 nodes
-%numNodes = 100;% change to 30 for 30
-numNodes = 30;
+numNodes = 30;% change to 30 for 30
+%numNodes = 30;
 [fa, md, rd, ad, cl, volume, TractProfile] = AFQ_ComputeTractProperties(fg,dt,numNodes);
 
 %% Load data to display for IFOF - r  is the correlation value and p in the significance of the partial
@@ -37,10 +37,10 @@ AFQ_RenderFibers(fg(11),'color',[.8 .8 1],'tractprofile',TractProfile(11),...
 grid off
 %% Diplay of partial correlation results ILF - WID [results obtained from line302-347 of ParCorr script)
 % Plot p -value
-TractProfile(13) = AFQ_TractProfileSet(TractProfile(13),'vals','p',results.ILF.p(1,:));
-AFQ_RenderFibers(fg(13),'color',[.8 .8 1],'tractprofile',TractProfile(13),...
-    'val','p','numfibers',numfibers,'cmap',cmap,'crange',crange,...
-    'radius',[1 6]);
+% TractProfile(13) = AFQ_TractProfileSet(TractProfile(13),'vals','p',results.ILF.p(1,:));
+% AFQ_RenderFibers(fg(13),'color',[.8 .8 1],'tractprofile',TractProfile(13),...
+    % 'val','p','numfibers',numfibers,'cmap',cmap,'crange',crange,...
+    % 'radius',[1 6]);
 
 % Plor Correlation Coeff
 TractProfile(13) = AFQ_TractProfileSet(TractProfile(13),'vals','significant_r',results.ILF.sig_r(1,:));
